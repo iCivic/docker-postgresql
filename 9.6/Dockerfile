@@ -1,7 +1,17 @@
 # vim:set ft=dockerfile:
 FROM debian:stretch-slim
 
-RUN set -ex; \
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+	echo "deb http://mirrors.163.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list && \
+	echo "deb-src http://mirrors.aliyun.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list && \
+	echo "deb http://mirrors.163.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list && \
+	echo "deb-src http://mirrors.163.com/debian/ stretch main non-free contrib" >> /etc/apt/sources.list && \
+	echo "deb-src http://mirrors.163.com/debian/ stretch-updates main non-free contrib" >> /etc/apt/sources.list && \
+	echo "deb-src http://mirrors.163.com/debian/ stretch-backports main non-free contrib" >> /etc/apt/sources.list && \
+	echo "deb http://mirrors.163.com/debian-security/ stretch/updates main non-free contrib" >> /etc/apt/sources.list && \
+	echo "deb-src http://mirrors.163.com/debian-security/ stretch/updates main non-free contrib" >> /etc/apt/sources.list
+	
+RUN set -ex; \	
 	if ! command -v gpg > /dev/null; then \
 		apt-get update; \
 		apt-get install -y --no-install-recommends \
